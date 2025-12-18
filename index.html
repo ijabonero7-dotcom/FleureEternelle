@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleur Eternelle | Timeless Flowers</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #fffaf7;
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* Soft flower background */
+body::before,
+body::after {
+    content: "✿ ❀ ✾ ❁";
+    position: fixed;
+    font-size: 80px;
+    color: rgba(232,155,181,0.15);
+    z-index: -1;
+    pointer-events: none;
+}
+body::before { top: 50px; left: 30px; }
+body::after { bottom: 50px; right: 30px; }
+
+header {
+    background: #f6d1dc;
+    padding: 20px;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.hero {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.section {
+    padding: 50px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* Flower cards with images */
+.card {
+    position: relative;
+    height: 280px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    transition: transform 0.3s ease;
+}
+
+.card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.card .card-info {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+    box-sizing: border-box;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #e89bb5, #f6b8cc);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(232,155,181,0.4);
+    transition: 0.3s;
+}
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(232,155,181,0.9);
+}
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Cart */
+.cart {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* GCash Box */
+#gcashBox {
+    display: none;
+    padding: 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+    box-shadow: 0 8px 18px rgba(232,155,181,0.4);
+}
+#gcashBox img {
+    max-width: 220px;
+    border-radius: 15px;
+    margin: 10px 0;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Falling petals */
+.petal {
+    position: fixed;
+    top: -50px;
+    font-size: 20px;
+    animation: fall linear infinite;
+    pointer-events: none;
+}
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* Popup */
+#confirmation {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+#confirmation div {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+footer {
+    background: #f6d1dc;
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Fleur Eternelle</h1>
+    <nav>
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#order">Order</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Timeless Flowers for Every Moment</h2>
+    <p>Fresh, handcrafted floral arrangements made with love.</p>
+</section>
+
+<section id="shop" class="section">
+    <h2>Our Flowers</h2>
+    <div class="products">
+        <div class="card">
+            <img src="images/roses.jpg" alt="Roses Bouquet">
+            <div class="card-info">
+                <h3>Roses</h3>
+                <p>₱1200</p>
+                <button class="btn" onclick="addToCart('Roses')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/tulips.jpg" alt="Tulips Bouquet">
+            <div class="card-info">
+                <h3>Tulips</h3>
+                <p>₱900</p>
+                <button class="btn" onclick="addToCart('Tulips')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/hibiscus.jpg" alt="Hibiscus Bouquet">
+            <div class="card-info">
+                <h3>Hibiscus</h3>
+                <p>₱800</p>
+                <button class="btn" onclick="addToCart('Hibiscus')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/keychain.jpg" alt="Keychain">
+            <div class="card-info">
+                <h3>Keychain</h3>
+                <p>₱1000</p>
+                <button class="btn" onclick="addToCart('Keychain')">Add to Cart</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="mixed.jpg" alt="Mixed Bouquet">
+            <div class="card-info">
+                <h3>Mixed Bouquet</h3>
+                <p>₱1500</p>
+                <button class="btn" onclick="addToCart('Mixed Bouquet')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="order" class="section">
+    <h2>Your Order</h2>
+    <div class="cart">
+        <pre id="cartItems">No items selected.</pre>
+
+        <select id="payment" onchange="handlePayment()">
+            <option value="">Select Payment</option>
+            <option value="gcash">GCash</option>
+            <option value="cod">Cash on Delivery</option>
+        </select>
+
+        <div id="gcashBox">
+            <p><strong>Scan to Pay via GCash</strong></p>
+            <img src="images/gcash.png" alt="GCash QR">
+            <p><strong>Fleur Eternelle</strong><br>09XX XXX XXXX</p>
+        </div>
+
+        <textarea placeholder="Message for recipient"></textarea>
+        <button class="btn" id="orderBtn" onclick="placeOrder()" disabled>Place Order</button>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <h2>About</h2>
+    <p>Fleur Eternelle creates timeless floral arrangements for every special moment.</p>
+</section>
+
+<section id="contact" class="section">
+    <h2>Contact</h2>
+    <input placeholder="Your Name">
+    <input type="email" placeholder="Your Email">
+    <textarea placeholder="Your Message"></textarea>
+    <button class="btn">Send Message</button>
+</section>
+
+<footer>
+    <p>Payment: GCash | Cash on Delivery</p>
+    <p>© 2025 Fleur Eternelle</p>
+</footer>
+
+<div id="confirmation">
+    <div>
+        <h2>🌸 Order Confirmed!</h2>
+        <p>Your flowers will be delivered with love.</p>
+        <button class="btn" onclick="confirmation.style.display='none'">Close</button>
+    </div>
+</div>
+
+<script>
+let cart = [];
+const prices = { Roses:1200, Tulips:900, Hibiscus:800, Keychain:1000, "Mixed Bouquet":1500 };
+
+function addToCart(item) { cart.push(item); updateCart(); }
+function updateCart() {
+    if (!cart.length) { cartItems.textContent="No items selected."; return; }
+    let total=0, text="";
+    cart.forEach(i=>{ total+=prices[i]; text+=`${i} - ₱${prices[i]}\n`; });
+    cartItems.textContent=text+`\nTotal: ₱${total}`;
+}
+
+function handlePayment() {
+    const p=payment.value;
+    gcashBox.style.display=p==="gcash"?"block":"none";
+    orderBtn.disabled=!p;
+}
+
+function placeOrder() {
+    if (!cart.length) return alert("Add flowers first 🌸");
+    confirmation.style.display="flex";
+    cart=[]; updateCart();
+    orderBtn.disabled=true; payment.value=""; gcashBox.style.display="none";
+}
+
+/* Petals animation */
+const petals=["🌸","🌺","🌷","❀","✿"];
+setInterval(()=>{
+    const p=document.createElement("div");
+    p.className="petal";
+    p.innerText=petals[Math.floor(Math.random()*petals.length)];
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),10000);
+},500);
+</script>
+
+</body>
+</html>
